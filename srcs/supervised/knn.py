@@ -1,5 +1,8 @@
+import sys, os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
 import numpy as np
-from srcs.utils import L1_distance, L2_distance
+from utils import L1_distance, L2_distance
 
 class KNN_Classifier:
     def __init__(self, n_neighbors: int=3, metric: str='l2'):
@@ -86,24 +89,20 @@ if __name__ == '__main__':
     X, y = mglearn.datasets.make_forge()
     X_train, X_test, y_train, y_test = train_test_split(X, y)
 
-    print("Classifier Result")
     sklearn_knn_clf = KNeighborsClassifier(n_neighbors=N_NEIGHBORS, metric=METRIC)
     sklearn_knn_clf.fit(X_train, y_train)
-    print(f"sklearn_knn_clf Score: {sklearn_knn_clf.score(X_test, y_test):.3f}")
-
     my_knn_clf = KNN_Classifier(n_neighbors=N_NEIGHBORS, metric=METRIC)
     my_knn_clf.fit(X_train, y_train)
-    print(f"my_knn_clf Score: {my_knn_clf.score(X_test, y_test):.3f}")
+
+    print(f"{'Classifier_acc':>15} | sklearn: {sklearn_knn_clf.score(X_test, y_test):.3f} | my_impl: {my_knn_clf.score(X_test, y_test):.3f}")
 
     # Regressor 비교
     X, y = mglearn.datasets.make_wave()
     X_train, X_test, y_train, y_test = train_test_split(X, y)
 
-    print("Regressor Result")
     sklearn_knn_reg = KNeighborsRegressor(n_neighbors=N_NEIGHBORS, metric=METRIC)
     sklearn_knn_reg.fit(X_train, y_train)
-    print(f"sklearn_knn_reg Score: {sklearn_knn_reg.score(X_test, y_test):.3f}")
-
     my_knn_reg = KNN_Regressor(n_neighbors=N_NEIGHBORS, metric=METRIC)
     my_knn_reg.fit(X_train, y_train)
-    print(f"my_knn_reg Score: {my_knn_reg.score(X_test, y_test):.3f}")
+
+    print(f"{'Regressor_acc':>15} | sklearn: {sklearn_knn_reg.score(X_test, y_test):.3f} | my_impl: {my_knn_reg.score(X_test, y_test):.3f}")
